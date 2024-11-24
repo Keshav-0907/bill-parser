@@ -11,7 +11,7 @@ const Sidebar = () => {
     router.push(route)
   }
   return (
-    <div className='w-56 h-full border-r-2 bg-gray-900 text-white py-2 px-5 flex flex-col gap-10'>
+    <div className='w-56 min-h-screen border-r-2 bg-gray-900 text-white py-2 px-5 flex flex-col gap-10'>
       <div onClick={()=>handleRoute('/')} className='text-3xl font-bold'>
         Swish
       </div>
