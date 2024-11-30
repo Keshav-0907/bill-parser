@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import Sidebar from "@/components/Sidebar";
+import { ReduxProvider } from "@/store/features/ReduxProvider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -29,10 +30,12 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className="flex min-h-screen h-full">
-          <Sidebar />
-          <div className="bg-gray-950 w-full text-white p-2">{children}</div>
-        </div>
+        <ReduxProvider>
+          <div className="flex min-h-screen h-full">
+            <Sidebar />
+            <div className="bg-gray-950 w-full text-white p-2">{children}</div>
+          </div>
+        </ReduxProvider>
       </body>
     </html>
   );

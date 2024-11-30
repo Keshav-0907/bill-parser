@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import {
   Table,
@@ -8,8 +9,20 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useSelector } from "react-redux";
+
+// {
+//   "product_name": "GEMS CHOCLATE POUCH",
+//   "quantity": 191,
+//   "unit_price": 4.76,
+//   "tax": 5,
+//   "price_with_tax": 5000
+// }
 
 const Products = () => {
+  const ProductsData = useSelector((state) => state.dataReducer.products);
+  console.log("ProductsData", ProductsData);
+
   return (
     <div className="p-10 flex gap-10 flex-col">
       <div className="text-3xl font-semibold">Products</div>
@@ -17,23 +30,41 @@ const Products = () => {
         <TableCaption>A list of your recent invoices.</TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[100px]">Invoice</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead>Method</TableHead>
-            <TableHead className="text-right">Amount</TableHead>
+            <TableHead className="w-[100px]">S. No</TableHead>
+            <TableHead>Product Name</TableHead>
+            <TableHead>Quantity</TableHead>
+            <TableHead>Unit Price</TableHead>
+            <TableHead>Tax</TableHead>
+            <TableHead className="text-right">
+              Total Amount ( with tax ){" "}
+            </TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          <TableRow>
-            <TableCell className="font-medium">INV001</TableCell>
-            <TableCell>Paid</TableCell>
-            <TableCell>Credit Card</TableCell>
-            <TableCell className="text-right">$250.00</TableCell>
-          </TableRow>
+          {ProductsData?.length > 0 ? (
+            ProductsData.map((product, index) => (
+              <TableRow key={index}>
+                <TableCell className="font-medium">{index + 1}</TableCell>
+                <TableCell>{product.product_name}</TableCell>
+                <TableCell>{product.quantity}</TableCell>
+                <TableCell>{product.unit_price}</TableCell>
+                <TableCell>{product.tax}%</TableCell>
+                <TableCell className="text-right">
+                  ₹{product.price_with_tax.toLocaleString()}
+                </TableCell>
+              </TableRow>
+            ))
+          ) : (
+            <TableRow>
+              <TableCell colSpan={4} className="text-center">
+                No product found.
+              </TableCell>
+            </TableRow>
+          )}
         </TableBody>
       </Table>
     </div>
-  )
-}
+  );
+};
 
-export default Products
+export default Products;
